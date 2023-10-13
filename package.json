@@ -1,0 +1,18 @@
+{
+  "scripts": {
+    "start": "tsx ./src/build.ts && node ./out/index.js",
+    "dev": "tsx ./src/build.ts && node ./out/index.js"
+  },
+  "dependencies": {
+    "@types/node": "^20.6.0",
+    "dotenv": "^16.3.1",
+    "esbuild": "^0.19.2",
+    "node-web-gpio": "^1.0.29",
+    "tsx": "^3.12.8",
+    "typescript": "^5.2.2"
+  },
+  "devDependencies": {
+    "prettier": "^3.0.3",
+    "prettier-plugin-organize-imports": "^3.2.3"
+  }
+}
