@@ -7,6 +7,7 @@
     "@hono/node-server": "^1.2.0",
     "@hono/zod-validator": "^0.1.9",
     "@types/node": "^20.6.0",
+    "@types/node-schedule": "^2.1.1",
     "dotenv": "^16.3.1",
     "esbuild": "^0.19.2",
     "hono": "^3.7.6",

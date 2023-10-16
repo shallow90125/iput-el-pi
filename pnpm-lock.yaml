@@ -14,6 +14,9 @@ dependencies:
   '@types/node':
     specifier: ^20.6.0
     version: 20.8.5
+  '@types/node-schedule':
+    specifier: ^2.1.1
+    version: 2.1.1
   dotenv:
     specifier: ^16.3.1
     version: 16.3.1
@@ -458,6 +461,12 @@ packages:
     dependencies:
       hono: 3.7.6
       zod: 3.22.4
+    dev: false
+
+  /@types/node-schedule@2.1.1:
+    resolution: {integrity: sha512-FaqkbBizA+DinA0XWtAhdbEXykUkkqzBWT4BSnhn71z9C+vvcDgNcHvTP59nBhMg3o39E/ZY8zB/AQ6/HGuRag==}
+    dependencies:
+      '@types/node': 20.8.5
     dev: false
 
   /@types/node@20.8.5:
