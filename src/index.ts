@@ -16,6 +16,9 @@ app.onError((error, c) => {
   app.route("/", routes[key]),
 );
 
-serve({ ...app, hostname: config.address, port: config.port }, (info) => {
-  console.log(`Listening on http://${info.address}:${info.port}`);
-});
+serve(
+  { ...app, hostname: config.host.address, port: config.host.port },
+  (info) => {
+    console.log(`Listening on http://${info.address}:${info.port}`);
+  },
+);
