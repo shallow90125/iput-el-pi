@@ -1,3 +1,2 @@
-export { jobs } from "./jobs";
-export { set } from "./set";
-export { stop } from "./stop";
+export { alarmsGet } from "./alarmsGet";
+export { alarmsPost } from "./alarmsPost";

@@ -2,8 +2,8 @@ import "dotenv/config";
 
 export const config = {
   host: {
-    address: process.env.ADDRESS,
-    port: Number(process.env.PORT),
+    address: process.env.HOST_ADDRESS,
+    port: Number(process.env.HOST_PORT),
   },
   mongodb: {
     address: process.env.MONGODB_ADDRESS,
