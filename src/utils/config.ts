@@ -9,4 +9,7 @@ export const config = {
     address: process.env.MONGODB_ADDRESS,
     db: process.env.MONGODB_DB,
   },
+  port: {
+    buzzer: Number(process.env.PORT_BUZZER),
+  },
 };

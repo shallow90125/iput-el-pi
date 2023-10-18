@@ -6,7 +6,6 @@ export const agenda = new Agenda({
 });
 
 agenda.define<Alarm>("alarm", async (job) => {
-  console.log(job.attrs._id);
   if (!job.attrs.data.dayOfWeek.length) {
     job.attrs.data.isEnabled = false;
     job.disable();
