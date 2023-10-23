@@ -1,12 +1,10 @@
-import { agenda } from "@/utils";
+import { alarmQueue } from "@/utils";
 import { Hono } from "hono";
 
 export const alarmsGet = new Hono();
 
 alarmsGet.get("/alarms", async (c) => {
-  const data = (await agenda.jobs({ name: "alarm" })).map(
-    (job) => job.attrs.data,
-  ) as Alarm[];
+  const data = (await alarmQueue.getJobs()).map((job) => job.data);
 
   return c.json(data);
 });

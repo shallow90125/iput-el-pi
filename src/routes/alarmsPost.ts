@@ -1,5 +1,6 @@
-import { agenda } from "@/utils";
+import { alarmQueue } from "@/utils";
 import { zValidator } from "@hono/zod-validator";
+import { RedisConnection } from "bullmq";
 import { Hono } from "hono";
 import { z } from "zod";
 
@@ -21,23 +22,25 @@ alarmsPost.post(
   ),
   async (c) => {
     const alarms = c.req.valid("json") as Alarm[];
-    await agenda.cancel({});
+    await alarmQueue.obliterate();
 
     alarms.forEach(async (alarm) => {
-      const job = agenda.create<Alarm>("alarm", alarm);
-
       const cron = [];
+      cron.push("*");
       cron.push(String(alarm.minute));
       cron.push(String(alarm.hour));
       cron.push("*");
       cron.push("*");
       cron.push(alarm.dayOfWeek.length ? alarm.dayOfWeek.join(",") : "*");
 
-      job.repeatEvery(cron.join(" "), { timezone: alarm.timezone });
-      if (!alarm.isEnabled) job.disable();
-
-      await job.save();
+      await alarmQueue.add(cron.join(" "), alarm, {
+        repeat: {
+          pattern: cron.join(" "),
+        },
+      });
     });
+    const redis = await new RedisConnection().client;
+    await redis.save((a) => console.log(a));
 
     return c.text("ok");
   },
