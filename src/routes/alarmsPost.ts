@@ -22,11 +22,11 @@ alarmsPost.post(
   ),
   async (c) => {
     const alarms = c.req.valid("json") as Alarm[];
-    await alarmQueue.obliterate();
+    await alarmQueue.obliterate({ force: true });
 
     alarms.forEach(async (alarm) => {
       const cron = [];
-      cron.push("*");
+      cron.push("0");
       cron.push(String(alarm.minute));
       cron.push(String(alarm.hour));
       cron.push("*");
