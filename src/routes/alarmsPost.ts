@@ -24,7 +24,7 @@ alarmsPost.post(
     const alarms = c.req.valid("json") as Alarm[];
     await alarmQueue.obliterate({ force: true });
 
-    alarms.forEach(async (alarm) => {
+    alarms.forEach(async (alarm, i) => {
       const cron = [];
       cron.push("0");
       cron.push(String(alarm.minute));
@@ -33,7 +33,7 @@ alarmsPost.post(
       cron.push("*");
       cron.push(alarm.dayOfWeek.length ? alarm.dayOfWeek.join(",") : "*");
 
-      await alarmQueue.add(cron.join(" "), alarm, {
+      await alarmQueue.add(i.toString(), alarm, {
         repeat: {
           pattern: cron.join(" "),
         },
