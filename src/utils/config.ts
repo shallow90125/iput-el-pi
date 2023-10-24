@@ -7,5 +7,6 @@ export const config = {
   },
   port: {
     buzzer: Number(process.env.PORT_BUZZER),
+    button: Number(process.env.PORT_BUTTON),
   },
 };
