@@ -1,7 +1,6 @@
 import { requestGPIOAccess } from "node-web-gpio";
 import { config } from "./config";
-
-let status = false;
+import { status } from "./status";
 
 export async function alarmStart() {
   try {
@@ -9,7 +8,7 @@ export async function alarmStart() {
     const sensor = gpioAccess.ports.get(config.port.buzzer);
     await sensor.export("out");
     await sensor.write(1);
-    status = true;
+    status.isOn = true;
   } catch {}
   console.log("alarm: start");
 }
@@ -20,12 +19,7 @@ export async function alarmStop() {
     const sensor = gpioAccess.ports.get(config.port.buzzer);
     await sensor.export("out");
     await sensor.write(0);
-    status = false;
+    status.isOn = false;
   } catch {}
   console.log("alarm: stop");
-}
-
-export async function alarmStatus() {
-  console.log("alarm: status");
-  return status;
 }
