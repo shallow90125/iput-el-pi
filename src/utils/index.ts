@@ -1,3 +1,3 @@
 export { config } from "./config";
 export { alarmQueue, alarmWorker } from "./job";
-export { alarmStart, alarmStop } from "./sensor";
+export { alarmStart, alarmStatus, alarmStop } from "./sensor";
