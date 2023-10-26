@@ -15,5 +15,5 @@ export async function buttonCount() {
     };
   });
   button.onchange = undefined;
-  alarmStop();
+  await alarmStop();
 }
