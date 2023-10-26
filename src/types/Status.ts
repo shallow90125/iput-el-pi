@@ -1,4 +1,4 @@
-class Status {
+export class Status {
   isOn: boolean;
   method: number;
   constructor(isOn: boolean, method: number) {
