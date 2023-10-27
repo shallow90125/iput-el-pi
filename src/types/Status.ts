@@ -1,8 +1,13 @@
+import { paths } from "@/utils/paths";
+import { Path } from "./Path";
+
 export class Status {
   isOn: boolean;
-  method: number;
-  constructor(isOn: boolean, method: number) {
+  path: Path;
+  constructor(isOn: boolean, path: Path) {
     this.isOn = isOn;
-    this.method = method;
+    this.path = path;
   }
 }
+
+typeof paths.values;
