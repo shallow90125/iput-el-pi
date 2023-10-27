@@ -1,3 +1,4 @@
+import { Alarm } from "@/types/Alarm";
 import { alarmQueue } from "@/utils";
 import { zValidator } from "@hono/zod-validator";
 import { RedisConnection } from "bullmq";
