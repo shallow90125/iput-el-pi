@@ -1,11 +1,11 @@
 import * as routes from "@/routes";
-import { agenda, config } from "@/utils";
+import { alarmWorker, config } from "@/utils";
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { logger } from "hono/logger";
 
 (async () => {
-  await agenda.start();
+  alarmWorker;
 
   const app = new Hono({});
 

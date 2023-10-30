@@ -4,15 +4,19 @@
     "dev": "tsx ./src/build.ts && node ./out/index.js"
   },
   "dependencies": {
-    "@hokify/agenda": "^6.3.0",
     "@hono/node-server": "^1.2.0",
     "@hono/zod-validator": "^0.1.9",
     "@types/node": "^20.6.0",
+    "bme280": "^2.1.1",
+    "bme280-sensor": "^0.1.7",
+    "bullmq": "^4.12.5",
     "dotenv": "^16.3.1",
     "esbuild": "^0.19.2",
     "hono": "^3.7.6",
-    "mongodb": "^6.1.0",
+    "i2c-bus": "^5.2.3",
     "node-web-gpio": "^1.0.29",
+    "node-web-i2c": "^1.1.35",
+    "sht31-node": "^1.0.1",
     "tsx": "^3.12.8",
     "typescript": "^5.2.2",
     "zod": "^3.22.4"

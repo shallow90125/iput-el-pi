@@ -1,4 +1,4 @@
-interface Alarm {
+export interface Alarm {
   hour: number;
   minute: number;
   dayOfWeek: number[];
