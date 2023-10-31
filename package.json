@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "start": "tsx ./src/build.ts && node ./out/index.js"
+    "start": "tsx ./src/build.ts && node ./out/index.js",
+    "test": "tsx ./src/test-build.ts && node ./out/test.js"
   },
   "dependencies": {
     "dotenv": "^16.3.1",
