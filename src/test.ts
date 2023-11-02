@@ -10,6 +10,8 @@ const mqtt = connect(config.mqtt.address, {
   clientId: config.mqtt.clientId + "aaa",
 });
 
+mqtt.subscribe("ID");
+
 mqtt.on("connect", () => {
   console.log("aa");
 
@@ -25,4 +27,6 @@ mqtt.on("message", async (topic, message) => {
   if (topic === "111") {
     console.log(message.toString());
   }
+  const random = (Math.random() * 9000 + 1000).toFixed(0);
+  mqtt.publish("indexID", `${random}`);
 });

@@ -1,10 +1,12 @@
+import fs from "fs";
 import { requestGPIOAccess } from "node-web-gpio";
 import { SHT31 } from "sht31-node";
 import { config } from "./utils/config";
 import { mqtt } from "./utils/mqtt";
-
+console.log("index.ts");
 const client = mqtt.connect();
 
+client.subscribe("indexID");
 client.on("connect", () => {
   client.subscribe("alarmStart");
   client.subscribe("alarmStop");
@@ -24,15 +26,24 @@ client.on("message", async (topic, message) => {
     console.log("tunagattemasen");
     return;
   }
+  const id = message.toString();
+  fs.writeFile(`ID.txt`, JSON.stringify({ id: id }), { flag: "a+" }, (err) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    console.log(`ID:${id} saved to file`);
+    client.publish("ID", `${id}`);
+  });
 
   if (topic === "alarmStart") {
     console.log("Alarm Start");
     sensor.write(1);
   }
-  // if (topic === "alarmStop") {
-  //   console.log("Alarm stop");
-  //   sensor.write(0);
-  // }
+  if (topic === "alarmStop") {
+    console.log("Alarm stop");
+    sensor.write(0);
+  }
   const a = setInterval(async () => {
     if (topic === "temperature") {
       const sht = new SHT31();
