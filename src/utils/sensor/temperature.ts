@@ -1,5 +1,5 @@
 import { PubTopic } from "@/types/Topic";
-import { config, pub } from "@/utils";
+import { pub, zEnv } from "@/utils";
 import { readFile } from "fs/promises";
 import { requestGPIOAccess } from "node-web-gpio";
 import { SHT31 } from "sht31-node";
@@ -9,7 +9,7 @@ export async function Temperature(): Promise<PubTopic> {
   const dataId = await readFile(`id.json`, "utf-8");
   id = JSON.parse(dataId).id;
   const gpioAccess = await requestGPIOAccess();
-  const sensor = gpioAccess.ports.get(config.port.buzzer);
+  const sensor = gpioAccess.ports.get(Number(zEnv.GPIO_BUZZER));
   if (sensor) {
     await sensor.export("out");
   } else {

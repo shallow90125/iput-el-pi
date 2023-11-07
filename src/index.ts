@@ -4,7 +4,7 @@ import { readFile, writeFile } from "fs/promises";
 import { Hono } from "hono";
 import { logger } from "hono/logger";
 import { ObjectId } from "mongodb";
-import { config, mqtt, pub } from "./utils";
+import { mqtt, pub, zEnv } from "./utils";
 
 (async () => {
   console.log("index.ts");
@@ -29,7 +29,7 @@ import { config, mqtt, pub } from "./utils";
     console.log(topic);
     (Object.keys(subs) as (keyof typeof subs)[]).map((key) => {
       if (topic.split("/")[0] === key) {
-        console.log(`${topic}: ${JSON.stringify(message.toString())}`);
+        console.log(`${topic}: ${message}`);
         return subs[key].callback(message);
       }
     });
@@ -45,14 +45,11 @@ import { config, mqtt, pub } from "./utils";
 
   app.get("/", async (c) => c.text(`piId: ${id}`));
 
-  serve(
-    { ...app, hostname: config.host.address, port: config.host.port },
-    (info) => {
-      console.log(
-        `[${new Date().toLocaleTimeString()}] http://${info.address}:${
-          info.port
-        }/`,
-      );
-    },
-  );
+  serve({ ...app, hostname: zEnv.ADDRESS, port: Number(zEnv.PORT) }, (info) => {
+    console.log(
+      `[${new Date().toLocaleTimeString()}] http://${info.address}:${
+        info.port
+      }`,
+    );
+  });
 })();
