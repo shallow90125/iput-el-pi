@@ -1,28 +1,23 @@
 import * as subs from "@/subs";
+import { mqtt, pub, state, zEnv } from "@/utils";
 import { serve } from "@hono/node-server";
-import { readFile, writeFile } from "fs/promises";
 import { Hono } from "hono";
 import { logger } from "hono/logger";
-import { ObjectId } from "mongodb";
-import { mqtt, pub, zEnv } from "./utils";
+import { init } from "raspi";
+import { SoftPWM } from "raspi-soft-pwm";
 
 (async () => {
-  console.log("index.ts");
-  // mqtt.subscribe("temperature");
+  init(() => {
+    const buzzer = new SoftPWM("GPIO12");
+    buzzer.write(0.5);
+  });
 
-  let id: string;
-  try {
-    const data = await readFile(`id.json`, "utf8");
-    id = JSON.parse(data).id;
-  } catch (e) {
-    id = new ObjectId().toString();
-    await writeFile("id.json", JSON.stringify({ id: id })).catch(() => {});
-  }
+  console.log(state);
 
-  pub("server", { piId: id });
+  pub("server", { piId: state.piId });
 
   (Object.keys(subs) as (keyof typeof subs)[]).map((key) =>
-    mqtt.subscribe(`${key}/${id}`),
+    mqtt.subscribe(`${key}/${state.piId}`),
   );
 
   mqtt.on("message", async (topic, message) => {
@@ -43,7 +38,7 @@ import { mqtt, pub, zEnv } from "./utils";
     return c.text(error.message, 500);
   });
 
-  app.get("/", async (c) => c.text(`piId: ${id}`));
+  app.get("/", async (c) => c.text(`piId: ${state.piId}`));
 
   serve({ ...app, hostname: zEnv.ADDRESS, port: Number(zEnv.PORT) }, (info) => {
     console.log(

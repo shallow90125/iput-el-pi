@@ -11,6 +11,8 @@
     "mongodb": "^6.2.0",
     "mqtt": "^5.1.3",
     "node-web-gpio": "^1.0.29",
+    "raspi": "^6.0.1",
+    "raspi-soft-pwm": "^6.0.2",
     "sht31-node": "^1.0.1",
     "tsx": "^3.12.8",
     "typescript": "^5.2.2",
