@@ -7,12 +7,14 @@ export async function publishTemperature() {
     const sht = new SHT31();
     const data = await sht.readSensorData();
 
+    const temperature = Math.round(data.temperature * 10) / 10;
+
     pub("server", {
       piId: state.piId,
-      temperature: Math.round(data.temperature * 10) / 10,
+      temperature: temperature,
     });
 
-    if (data.temperature > 27) {
+    if (29 < temperature) {
       alarmStop();
       clearInterval(state.interval);
     }

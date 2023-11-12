@@ -20,6 +20,10 @@ import { SoftPWM } from "raspi-soft-pwm";
     mqtt.subscribe(`${key}/${state.piId}`),
   );
 
+  mqtt.on("connect", () => {
+    console.log(`[${new Date().toLocaleTimeString()}] ${zEnv.MQTT_URL}`);
+  });
+
   mqtt.on("message", async (topic, message) => {
     console.log(topic);
     (Object.keys(subs) as (keyof typeof subs)[]).map((key) => {
