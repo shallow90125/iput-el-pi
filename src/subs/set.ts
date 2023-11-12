@@ -1,29 +1,13 @@
 import { Sub } from "@/types/Sub";
-import { pub } from "@/utils";
-import { alarmStart } from "@/utils/sensor/alarmStart";
-import { alarmStop } from "@/utils/sensor/alarmStop";
-import { Temperature } from "@/utils/sensor/temperature";
-import { readFile } from "fs/promises";
-export const set = new Sub("set", async (payload) => {
-  let id: string;
-  const data = await readFile(`id.json`, "utf-8");
-  id = JSON.parse(data).id;
-  // Messageが来た時の処理
-  if (payload.on === true) {
-    pub("server", {
-      on: true,
-      piId: id,
-    });
-    alarmStart();
-  } else {
-    pub("server", {
-      on: false,
-      piId: id,
-    });
-    alarmStop();
-  }
+import { alarmStart, alarmStop, publishTemperature } from "@/utils";
+import { state } from "@/utils/state";
 
-  if (payload.mode === "temperature") {
-    Temperature();
-  }
+export const set = new Sub("set", async (payload) => {
+  if (!payload.on) return await alarmStop();
+
+  if (state.interval) clearInterval(state.interval);
+
+  await alarmStart();
+
+  if (payload.mode == "temperature") publishTemperature();
 });

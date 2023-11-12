@@ -1,8 +1,8 @@
 import { connect } from "mqtt";
-import { config } from "./config";
+import { zEnv } from "./env";
 
-export const mqtt = connect(config.mqtt.address, {
-  username: config.mqtt.username,
-  password: config.mqtt.password,
-  clientId: config.mqtt.clientId,
+export const mqtt = connect(zEnv.MQTT_URL, {
+  username: zEnv.MQTT_USERNAME,
+  password: zEnv.MQTT_PASSWORD,
+  clientId: zEnv.MQTT_CLIENT_ID,
 });
